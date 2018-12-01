@@ -17,7 +17,7 @@ def ask_user():
 def ask_computer():
     while True:
         user_ask = input('Теперь твой вопрос: ')
-        if qa_dict.get(user_ask) != None:
+        if user_ask in qa_dict:
             print(qa_dict.get(user_ask))
             break
         else:
