@@ -29,8 +29,7 @@ def greet_user(bot, update):
 
 def talk_to_me(bot, update):
     user_text = update.message.text 
-    print(user_text)
-    update.message.reply_text(user_text)
+    update.message.reply_text(user_text + "\nЧтобы играть в города - пиши /cities Город")
 
 def planet_position(bot, update):
     today_date = datetime.datetime.now().strftime('%d/%m/%Y')
@@ -66,7 +65,7 @@ def cities_game(bot, update):
             pass
         update.message.reply_text("Ура, я победил! Начни новую игру с /cities Город")
         return 0
-    elif user_city_name not in city_game_db[user_city_first_letter.lower()]:
+    elif user_city_name not in (city_capitalized.capitalize() for city_capitalized in city_game_db[user_city_first_letter.lower()]):
         update.message.reply_text("Давай существующие в России города, а не вымышленные")
         return 0
     if cities_player_username not in city_game_dict:
