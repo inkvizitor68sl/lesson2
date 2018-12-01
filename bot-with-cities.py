@@ -45,7 +45,14 @@ def planet_position(bot, update):
 
 def cities_game(bot, update):
     cities_player_username = update.message.chat.username
-    user_city_name = update.message.text.split()[1].capitalize()
+    try:
+        user_city_name_tmp = update.message.text.split()[1:]
+        user_city_name = ' '.join(user_city_name_tmp).capitalize()
+        user_city_first_letter = user_city_name[0]
+        user_city_last_letter = user_city_name[-1]
+    except IndexError:
+        update.message.reply_text("Игра в города. Чтобы назвать город, используй /cities Город")
+        return 0
     user_city_first_letter = user_city_name[0]
     user_city_last_letter = user_city_name[-1]
     forbidden_last_letters = ["ь", "ы", "ъ", "ё", "й"]
@@ -103,6 +110,8 @@ def main():
     dp.add_handler(CommandHandler("abqr", greet_user))
     dp.add_handler(CommandHandler("planet", planet_position))
     dp.add_handler(CommandHandler("cities", cities_game))
+    dp.add_handler(CommandHandler("c", cities_game))
+    dp.add_handler(CommandHandler("с", cities_game))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
     mybot.start_polling()
     mybot.idle()
